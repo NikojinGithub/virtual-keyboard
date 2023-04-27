@@ -1,0 +1,6 @@
+.keyboard__btn {
+  height: 100%;
+  width: 8%;
+  border: 1px solid black;
+  border-radius: 5px;
+}

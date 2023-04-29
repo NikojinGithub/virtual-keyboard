@@ -23,7 +23,24 @@ function renderElements(area, array){
   array.forEach(i => area.append(i))
 }
 
-const firstRowBtns = ['~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'];
+
+// const firstRowBtns = ['~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'];
+const firstRowBtnsEng = [
+  { item: '~', value: '~' },
+  { item: '1', value: 1 },
+  { item: '2', value: 2 },
+  { item: '3', value: 3 },
+  { item: '4', value: 4 },
+  { item: '5', value: 5 },
+  { item: '6', value: 6 },
+  { item: '7', value: 7 },
+  { item: '8', value: 8 },
+  { item: '9', value: 9 },
+  { item: '0', value: 0 },
+  { item: '-', value: '-' },
+  { item: '=', value: '=' },
+  { item: 'backspace', value: '' },
+];
 const secondRowBtns = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '/'];
 
 //Функция создает элемент кнопку и вставляет ее в передаваемый контейнер(ряд кнопок).
@@ -31,7 +48,8 @@ function createButtons(container, array){
   array.forEach(i => {
     const button = document.createElement('div');
     button.classList.add('keyboard__btn');
-    button.textContent = i;
+    button.dataset.value = i.value;
+    button.textContent = i.item;
     container.append(button);
   })
 }
@@ -39,7 +57,7 @@ function createButtons(container, array){
 //Проходим по массиву рядов кнопок и вставляет кнопки из нужного массива(ряда) в зависимости от того какой ряд в данный момент.
 keyboardRows.forEach((element, index) => {
   if(index === 0){
-    createButtons(element, firstRowBtns);
+    createButtons(element, firstRowBtnsEng);
   }
 });
 
@@ -61,3 +79,30 @@ firstRowLastBtn.classList.add('keyboard__btn_type_backspace');
 renderElements(page, basicElements);
 renderElements(main, mainElements);
 renderElements(keyboardArea, keyboardRows);
+
+
+//Появление символа в тестовом поле.
+
+const buttons = document.querySelectorAll('.keyboard__btn');
+
+buttons.forEach(button => {
+  button.addEventListener('click', (evt) => {
+    textArea.value += evt.target.dataset.value;
+
+    if(evt.target.textContent === 'backspace'){
+      removeElement();
+    }
+  })
+})
+
+
+
+//Функции для специальных клавиш backspace space etc.
+function removeElement() {
+  let currentText = textArea.value;
+  if(currentText.length > 0){
+    const newText = currentText.slice(0, -1);
+    textArea.value = newText;
+  }
+}
+

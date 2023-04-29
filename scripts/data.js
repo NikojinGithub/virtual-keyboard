@@ -1,0 +1,33 @@
+export const firstRowBtnsEng = [
+  { itemEng: '~', itemRu: 'ё', valueEng: '~', valueRu: 'ё' },
+  { itemEng: '1', itemRu: '1', valueEng: 1, valueRu: 1 },
+  { itemEng: '2', itemRu: '2', valueEng: 2, valueRu: 2 },
+  { itemEng: '3', itemRu: '3', valueEng: 3, valueRu: 3 },
+  { itemEng: '4', itemRu: '4', valueEng: 4, valueRu: 4 },
+  { itemEng: '5', itemRu: '5', valueEng: 5, valueRu: 5 },
+  { itemEng: '6', itemRu: '6', valueEng: 6, valueRu: 6 },
+  { itemEng: '7', itemRu: '7', valueEng: 7, valueRu: 7 },
+  { itemEng: '8', itemRu: '8', valueEng: 8, valueRu: 8 },
+  { itemEng: '9', itemRu: '9', valueEng: 9, valueRu: 9 },
+  { itemEng: '0', itemRu: '0', valueEng: 0, valueRu: 0 },
+  { itemEng: '-', itemRu: '-', valueEng: '-', valueRu: '-' },
+  { itemEng: '=', itemRu: '=', valueEng: '=', valueRu: '=' },
+  { itemEng: 'backspace', itemRu: 'backspace', valueEng: '', valueRu: '' },
+];
+
+export const secondRowBtnsEng = [
+  { itemEng: 'Tab', valueEng: '    ', itemRu: 'Tab', valueRu: '    ' },
+  { itemEng: 'q', itemRu: 'й', valueEng: 'q', valueRu: 'й' },
+  { itemEng: 'w', itemRu: 'ц', valueEng: 'w', valueRu: 'ц' },
+  { itemEng: 'e', itemRu: 'у', valueEng: 'e', valueRu: 'у' },
+  { itemEng: 'r', itemRu: 'к', valueEng: 'r', valueRu: 'к' },
+  { itemEng: 't', itemRu: 'е', valueEng: 't', valueRu: 'е' },
+  { itemEng: 'y', itemRu: 'н', valueEng: 'y', valueRu: 'н' },
+  { itemEng: 'u', itemRu: 'г', valueEng: 'u', valueRu: 'г' },
+  { itemEng: 'i', itemRu: 'ш', valueEng: 'i', valueRu: 'ш' },
+  { itemEng: 'o', itemRu: 'щ', valueEng: 'o', valueRu: 'щ' },
+  { itemEng: 'p', itemRu: 'з', valueEng: 'p', valueRu: 'з' },
+  { itemEng: '[', itemRu: 'х', valueEng: '[', valueRu: 'х' },
+  { itemEng: ']', itemRu: 'ъ', valueEng: ']', valueRu: 'ъ' },
+  { itemEng: '\/', itemRu: '\/', valueEng: '\/' },
+];

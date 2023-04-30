@@ -13,6 +13,7 @@
 @import url(../blocks/keyboard/__row/keyboard__row.css);
 @import url(../blocks/keyboard/__btn/keyboard__btn.css);
 @import url(../blocks/keyboard/__btn/_backspace/keyboard__btn_type_backspace.css);
+@import url(../blocks/keyboard/_active/keyboard__btn_active.css);
 
 .btn {
   height: 20px;

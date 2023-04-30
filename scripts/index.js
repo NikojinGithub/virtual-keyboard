@@ -1,4 +1,4 @@
-import { firstRowBtnsEng, secondRowBtnsEng } from './data.js';
+import { firstRowBtns, secondRowBtns, thirdRowBtns } from './data.js';
 
 const page = document.querySelector('.page');
 const buttons = document.querySelectorAll('.keyboard__btn');
@@ -32,7 +32,7 @@ function renderElements(area, array){
 }
 
 //Функция создает элемент кнопку и вставляет ее в передаваемый контейнер(ряд кнопок).
-//Так же в нутри функции мы вешаем обработчики событий на кнопки. И добавляем доп классы спец кнопкам.
+//Так же внутри функции мы вешаем обработчики событий на кнопки. И добавляем доп классы спец кнопкам.
 function createButtons(container, array){
   container.innerHTML = '';
 
@@ -42,6 +42,7 @@ function createButtons(container, array){
       const button = document.createElement('div');
       button.classList.add('keyboard__btn');
       button.dataset.value = i.valueEng;
+      button.dataset.code = i.code;
       button.textContent = i.itemEng;
       container.append(button);
       button.addEventListener('click', addBtnsListener);
@@ -53,6 +54,7 @@ function createButtons(container, array){
       const button = document.createElement('div');
       button.classList.add('keyboard__btn');
       button.dataset.value = i.valueRu;
+      button.dataset.code = i.code;
       button.textContent = i.itemRu;
       container.append(button);
       button.addEventListener('click', addBtnsListener);
@@ -60,12 +62,13 @@ function createButtons(container, array){
 
   }
 
-  addAdditionalClass();
+  // addAdditionalClass(container);
 
 }
 
-createButtons(firstRow, firstRowBtnsEng);
-createButtons(secondRow, secondRowBtnsEng);
+createButtons(firstRow, firstRowBtns);
+createButtons(secondRow, secondRowBtns);
+createButtons(thirdRow, thirdRowBtns);
 
 //add classes to elements
 header.classList.add('header');
@@ -77,11 +80,23 @@ footer.classList.add('footer');
 keyboardRows.forEach(i => i.classList.add('keyboard__row'));
 
 //add class to specific buttons
-function addAdditionalClass(){
-  const firstRowLastBtn = firstRow.querySelector('.keyboard__btn:last-child');
-  firstRowLastBtn.classList.add('keyboard__btn_type_backspace');
+// function addAdditionalClass(container){
+//   const backspaceBtn = container.querySelector('.keyboard__btn:last-child');
+//   backspaceBtn.classList.add('keyboard__btn_type_backspace');
+//   const capsBtn = container.querySelector('.keyboard__btn:first-child')
+//   capsBtn.classList.add('keyboard__btn_type_backspace')
+// }
+
+
+//add class to specific buttons
+function additionalClass(){
+const backspaceBtn = firstRow.querySelector('.keyboard__btn:last-child');
+const capsBtn = thirdRow.querySelector('.keyboard__btn:first-child');
+backspaceBtn.classList.add('keyboard__btn_type_backspace');
+capsBtn.classList.add('keyboard__btn_type_backspace');
 }
 
+additionalClass();
 
 
 
@@ -102,6 +117,32 @@ function addBtnsListener(evt){
   }
 }
 
+// Функция которая работает с нажатием кнопок.
+function pushBtn(evt){
+  highlightButton(evt.keyCode)
+  if(evt.key === 'Backspace'){
+    removeElement();
+  } else if(evt.key === 'Tab'){
+    textArea.value += ' ';
+  } else {
+    textArea.value += evt.key;
+  }
+
+  //Отключаем стандартные события для спец кнопок.
+  if (isSpecialKey(evt.key)) {
+    evt.preventDefault();
+  }
+}
+
+//Функция для проверки на спец клавишы.
+function isSpecialKey(key) {
+  const specialKeys = ['Tab', 'CapsLock', 'Shift', 'Control', 'Alt', 'Enter'];
+  return specialKeys.includes(key);
+}
+
+document.addEventListener('keydown', pushBtn);
+document.addEventListener('keyup', removeHighlight);
+
 
 //Функция удаляет обработчик событий с кнопок.
 function removeBtnsListener(){
@@ -112,12 +153,15 @@ function removeBtnsListener(){
 
 
 //Функция для смены языка. Дополнить. Привязать к правильным кнопкам.
-btn.addEventListener('click', (evt) => {
+btn.addEventListener('click', () => {
   keyboardArea.classList.toggle('en');
   removeBtnsListener();
-  createButtons(firstRow, firstRowBtnsEng);
-  createButtons(secondRow, secondRowBtnsEng);
+  createButtons(firstRow, firstRowBtns);
+  createButtons(secondRow, secondRowBtns);
+  createButtons(thirdRow, thirdRowBtns)
+  additionalClass();
 })
+
 
 
 
@@ -130,3 +174,18 @@ function removeElement() {
   }
 }
 
+
+//Подсветка кнопок при нажатии.
+function highlightButton(key) {
+  const button = keyboardArea.querySelector(`.keyboard__btn[data-code="${key}"]`);
+  if (button) {
+    button.classList.add('keyboard__btn_active');
+  }
+}
+
+function removeHighlight() {
+  const virtualButtons = keyboardArea.querySelectorAll('.keyboard__btn');
+  virtualButtons.forEach(button => {
+    button.classList.remove('keyboard__btn_active');
+  });
+}

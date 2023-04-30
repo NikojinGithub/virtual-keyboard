@@ -12,8 +12,12 @@
 @import url(../blocks/keyboard/keyboard.css);
 @import url(../blocks/keyboard/__row/keyboard__row.css);
 @import url(../blocks/keyboard/__btn/keyboard__btn.css);
-@import url(../blocks/keyboard/__btn/_backspace/keyboard__btn_type_backspace.css);
-@import url(../blocks/keyboard/_active/keyboard__btn_active.css);
+@import url(../blocks/keyboard/__btn/_space/keyboard__btn_type_space.css);
+@import url(../blocks/keyboard/__btn/_large/keyboard__btn_size_large.css);
+@import url(../blocks/keyboard/__btn/_medium/keyboard__btn_type_backspace.css);
+@import url(../blocks/keyboard/__btn/_small/keyboard__btn_size_small.css);
+@import url(../blocks/keyboard/__btn/_active/keyboard__btn_active.css);
+@import url(../blocks/keyboard/__btn/_keydown/keyboard__btn_type_keydown.css);
 
 .btn {
   height: 20px;

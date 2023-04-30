@@ -1,4 +1,4 @@
-import { firstRowBtns, secondRowBtns, thirdRowBtns } from './data.js';
+import { firstRowBtns, secondRowBtns, thirdRowBtns, fourthRowBtns, fifthRowBtns } from './data.js';
 
 const page = document.querySelector('.page');
 const buttons = document.querySelectorAll('.keyboard__btn');
@@ -62,13 +62,13 @@ function createButtons(container, array){
 
   }
 
-  // addAdditionalClass(container);
-
 }
 
 createButtons(firstRow, firstRowBtns);
 createButtons(secondRow, secondRowBtns);
 createButtons(thirdRow, thirdRowBtns);
+createButtons(fourthRow, fourthRowBtns);
+createButtons(fifthRow, fifthRowBtns);
 
 //add classes to elements
 header.classList.add('header');
@@ -80,25 +80,31 @@ footer.classList.add('footer');
 keyboardRows.forEach(i => i.classList.add('keyboard__row'));
 
 //add class to specific buttons
-// function addAdditionalClass(container){
-//   const backspaceBtn = container.querySelector('.keyboard__btn:last-child');
-//   backspaceBtn.classList.add('keyboard__btn_type_backspace');
-//   const capsBtn = container.querySelector('.keyboard__btn:first-child')
-//   capsBtn.classList.add('keyboard__btn_type_backspace')
-// }
-
-
-//add class to specific buttons
 function additionalClass(){
-const backspaceBtn = firstRow.querySelector('.keyboard__btn:last-child');
-const capsBtn = thirdRow.querySelector('.keyboard__btn:first-child');
-backspaceBtn.classList.add('keyboard__btn_type_backspace');
-capsBtn.classList.add('keyboard__btn_type_backspace');
+  const backspaceBtn = firstRow.querySelector('.keyboard__btn:last-child');
+  const capsBtn = thirdRow.querySelector('.keyboard__btn:first-child');
+  const enterBtn = thirdRow.querySelector('.keyboard__btn:last-child');
+  const tabBtn = secondRow.querySelector('.keyboard__btn:first-child');
+  const slashBtn = secondRow.querySelector('.keyboard__btn:last-child');
+  const leftShiftBtn = fourthRow.querySelector('.keyboard__btn:first-child');
+  const rightShiftBtn = fourthRow.querySelector('.keyboard__btn:last-child');
+  const elements = fifthRow.querySelectorAll('.keyboard__btn');
+  const spaceBtn = elements[3];
+  const leftAltBtn = elements[2];
+  const rightAltBtn = elements[4];
+  backspaceBtn.classList.add('keyboard__btn_size_medium');
+  capsBtn.classList.add('keyboard__btn_size_medium');
+  enterBtn.classList.add('keyboard__btn_size_medium');
+  tabBtn.classList.add('keyboard__btn_size_small');
+  slashBtn.classList.add('keyboard__btn_size_small');
+  leftShiftBtn.classList.add('keyboard__btn_size_large');
+  rightShiftBtn.classList.add('keyboard__btn_size_small');
+  spaceBtn.classList.add('keyboard__btn_type_space');
+  leftAltBtn.classList.add('keyboard__btn_size_small');
+  rightAltBtn.classList.add('keyboard__btn_size_small');
 }
 
 additionalClass();
-
-
 
 
 renderElements(page, basicElements);
@@ -107,23 +113,47 @@ renderElements(keyboardArea, keyboardRows);
 
 
 
-
 //Функция для обработчика событий.
 //Появление символа в тестовом поле.
 function addBtnsListener(evt){
   textArea.value += evt.target.dataset.value;
-  if(evt.target.textContent === 'backspace'){
+  if(evt.target.textContent === 'Backspace'){
     removeElement();
   }
 }
 
+
 // Функция которая работает с нажатием кнопок.
 function pushBtn(evt){
-  highlightButton(evt.keyCode)
+
+  highlightButton(evt.code)
+
   if(evt.key === 'Backspace'){
     removeElement();
   } else if(evt.key === 'Tab'){
     textArea.value += ' ';
+  } else if(evt.key === 'Enter'){
+    textArea.value += '\n'
+  } else if(evt.key === 'ArrowUp'){
+    textArea.value += '↑';
+  } else if(evt.key === 'ArrowLeft'){
+    textArea.value += '←';
+  } else if(evt.key === 'ArrowRight'){
+    textArea.value += '→';
+  } else if(evt.key === 'ArrowDown'){
+    textArea.value += '↓';
+  } else if(evt.key === 'Space'){
+    textArea.value += ' ';
+  } else if(evt.key === 'Alt'){
+    textArea.velue += '';
+  } else if(evt.key === 'Control'){
+    textArea.value += '';
+  } else if(evt.key === 'Meta'){
+    textArea.value += '';
+  } else if(evt.key === 'CapsLock'){
+    textArea.value += '';
+  } else if(evt.key === 'Shift'){
+    textArea.value += '';
   } else {
     textArea.value += evt.key;
   }
@@ -158,7 +188,9 @@ btn.addEventListener('click', () => {
   removeBtnsListener();
   createButtons(firstRow, firstRowBtns);
   createButtons(secondRow, secondRowBtns);
-  createButtons(thirdRow, thirdRowBtns)
+  createButtons(thirdRow, thirdRowBtns);
+  createButtons(fourthRow, fourthRowBtns);
+  createButtons(fifthRow, fifthRowBtns);
   additionalClass();
 })
 
@@ -180,12 +212,15 @@ function highlightButton(key) {
   const button = keyboardArea.querySelector(`.keyboard__btn[data-code="${key}"]`);
   if (button) {
     button.classList.add('keyboard__btn_active');
+    button.classList.add('keyboard__btn_type_keydown');
   }
 }
 
+//Удаление подсветки.
 function removeHighlight() {
   const virtualButtons = keyboardArea.querySelectorAll('.keyboard__btn');
   virtualButtons.forEach(button => {
     button.classList.remove('keyboard__btn_active');
+    button.classList.remove('keyboard__btn_type_keydown');
   });
 }

@@ -1,0 +1,21 @@
+.keyboard__btn {
+  height: 100%;
+  width: 8%;
+  /* border: 1px solid black; */
+  border-radius: 5px;
+  transition: ease .2s;
+  background-color: aliceblue;
+  box-shadow: 0 0 .5px 1px rgba(0, 0, 0, .6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard__btn:active {
+  background-color: rgba(220,220,220);
+  border-radius: 30px;
+}
+
+.keyboard__btn:hover {
+  cursor: pointer;
+}

@@ -69,7 +69,7 @@ export const fifthRowBtns = [
   { itemEng: 'Win', itemRu: 'Win', valueEng: '', valueRu: '', code: 'MetaLeft' },
   { itemEng: 'Alt', itemRu: 'Alt', valueEng: '', valueRu: '', code: 'AltLeft' },
   { itemEng: '', itemRu: '', valueEng: ' ', valueRu: ' ', code: 'Space' },
-  { itemEng: 'Alt', itemRu: 'Alt', valueEng: '', valueRu: '', code: 'AltRight' },
+  { itemEng: 'EN', itemRu: 'RU', valueEng: '', valueRu: '', code: 'AltRight' },
   { itemEng: 'Ctrl', itemRu: 'Ctrl', valueEng: '', valueRu: '', code: 'ControlRight' },
   { itemEng: '←', itemRu: '←', valueEng: '←', valueRu: '←', code: 'ArrowLeft' },
   { itemEng: '↓', itemRu: '↓', valueEng: '↓', valueRu: '↓', code: 'ArrowDown' },

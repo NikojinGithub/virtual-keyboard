@@ -1,4 +1,10 @@
-import { firstRowBtns, secondRowBtns, thirdRowBtns, fourthRowBtns, fifthRowBtns } from './data.js';
+import {
+  firstRowBtns,
+  secondRowBtns,
+  thirdRowBtns,
+  fourthRowBtns,
+  fifthRowBtns
+} from './data.js';
 
 const page = document.querySelector('.page');
 const buttons = document.querySelectorAll('.keyboard__btn');
@@ -8,13 +14,7 @@ const header = document.createElement('header');
 const main = document.createElement('main');
 const textArea = document.createElement('textarea');
 const keyboardArea = document.createElement('section');
-keyboardArea.classList.add('en');
 const footer = document.createElement('footer');
-
-const btn = document.createElement('button');
-btn.classList.add('btn');
-header.append(btn);
-
 const firstRow = document.createElement('div');
 const secondRow = document.createElement('div');
 const thirdRow = document.createElement('div');
@@ -46,6 +46,10 @@ function createButtons(container, array){
       button.textContent = i.itemEng;
       container.append(button);
       button.addEventListener('click', addBtnsListener);
+      //Кнопка смены языка
+      if( i.code === 'AltRight'){
+        button.addEventListener('click', changeLang);
+      }
     })
 
   } else {
@@ -58,6 +62,10 @@ function createButtons(container, array){
       button.textContent = i.itemRu;
       container.append(button);
       button.addEventListener('click', addBtnsListener);
+      //Кнопка смены языка
+      if( i.code === 'AltRight'){
+        button.addEventListener('click', changeLang);
+      }
     })
 
   }
@@ -75,7 +83,7 @@ header.classList.add('header');
 main.classList.add('main');
 textArea.classList.add('main__text');
 keyboardArea.classList.add('keyboard');
-keyboardArea.classList.add('en');
+// keyboardArea.classList.add('en');
 footer.classList.add('footer');
 keyboardRows.forEach(i => i.classList.add('keyboard__row'));
 
@@ -94,6 +102,7 @@ function additionalClass(){
   const rightAltBtn = elements[4];
   backspaceBtn.classList.add('keyboard__btn_size_medium');
   capsBtn.classList.add('keyboard__btn_size_medium');
+  capsBtn.id = 'capslock';
   enterBtn.classList.add('keyboard__btn_size_medium');
   tabBtn.classList.add('keyboard__btn_size_small');
   slashBtn.classList.add('keyboard__btn_size_small');
@@ -111,14 +120,21 @@ renderElements(page, basicElements);
 renderElements(main, mainElements);
 renderElements(keyboardArea, keyboardRows);
 
-
+const btnCapsLock = keyboardArea.querySelector('#capslock');
 
 //Функция для обработчика событий.
 //Появление символа в тестовом поле.
 function addBtnsListener(evt){
-  textArea.value += evt.target.dataset.value;
+  if(btnCapsLock.classList.contains('open')){
+    textArea.value += evt.target.dataset.value.toUpperCase();
+  } else {
+    textArea.value += evt.target.dataset.value;
+  }
   if(evt.target.textContent === 'Backspace'){
     removeElement();
+  }
+  if(evt.target.textContent === 'Enter'){
+    textArea.value += '\n';
   }
 }
 
@@ -144,18 +160,25 @@ function pushBtn(evt){
     textArea.value += '↓';
   } else if(evt.key === 'Space'){
     textArea.value += ' ';
-  } else if(evt.key === 'Alt'){
-    textArea.velue += '';
+  } else if(evt.code === 'AltRight'){
+    changeLang();
+  } else if(evt.code === 'AltLeft'){
+    textArea.value += '';
   } else if(evt.key === 'Control'){
     textArea.value += '';
   } else if(evt.key === 'Meta'){
     textArea.value += '';
   } else if(evt.key === 'CapsLock'){
     textArea.value += '';
+    addUpperCase();
   } else if(evt.key === 'Shift'){
     textArea.value += '';
   } else {
+    if(btnCapsLock.classList.contains('open')){
+      textArea.value += evt.key.toUpperCase();
+    } else {
     textArea.value += evt.key;
+    }
   }
 
   //Отключаем стандартные события для спец кнопок.
@@ -181,21 +204,20 @@ function removeBtnsListener(){
   })
 }
 
-
-//Функция для смены языка. Дополнить. Привязать к правильным кнопкам.
-btn.addEventListener('click', () => {
-  keyboardArea.classList.toggle('en');
-  removeBtnsListener();
-  createButtons(firstRow, firstRowBtns);
-  createButtons(secondRow, secondRowBtns);
-  createButtons(thirdRow, thirdRowBtns);
-  createButtons(fourthRow, fourthRowBtns);
-  createButtons(fifthRow, fifthRowBtns);
-  additionalClass();
-})
-
-
-
+//Функция для смены языка.
+function changeLang(){
+  const button = fifthRow.querySelectorAll('.keyboard__btn')[4];
+  if(button){
+    keyboardArea.classList.toggle('en');
+    removeBtnsListener();
+    createButtons(firstRow, firstRowBtns);
+    createButtons(secondRow, secondRowBtns);
+    createButtons(thirdRow, thirdRowBtns);
+    createButtons(fourthRow, fourthRowBtns);
+    createButtons(fifthRow, fifthRowBtns);
+    additionalClass();
+  }
+}
 
 //Функции для специальных клавиш backspace etc.
 function removeElement() {
@@ -224,3 +246,10 @@ function removeHighlight() {
     button.classList.remove('keyboard__btn_type_keydown');
   });
 }
+
+
+function addUpperCase(){
+  btnCapsLock.classList.toggle('open');
+}
+
+btnCapsLock.addEventListener('click', addUpperCase);

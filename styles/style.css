@@ -19,7 +19,6 @@
 @import url(../blocks/keyboard/__btn/_active/keyboard__btn_active.css);
 @import url(../blocks/keyboard/__btn/_keydown/keyboard__btn_type_keydown.css);
 
-.btn {
-  height: 20px;
-  width: 50px;
+.open {
+  background-color: yellow;
 }

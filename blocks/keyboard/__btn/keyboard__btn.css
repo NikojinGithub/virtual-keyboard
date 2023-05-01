@@ -15,3 +15,7 @@
   background-color: rgba(220,220,220);
   border-radius: 30px;
 }
+
+.keyboard__btn:hover {
+  cursor: pointer;
+}

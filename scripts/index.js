@@ -6,7 +6,8 @@ import {
   fifthRowBtns
 } from './data.js';
 
-const page = document.querySelector('.page');
+const page = document.querySelector('body');
+page.classList.add('page');
 const buttons = document.querySelectorAll('.keyboard__btn');
 
 //create elements
@@ -50,6 +51,9 @@ function createButtons(container, array){
       if( i.code === 'AltRight'){
         button.addEventListener('click', changeLang);
       }
+      if (i.code === 'CapsLock'){
+        button.addEventListener('click', addUpperCase);
+      }
     })
 
   } else {
@@ -66,6 +70,9 @@ function createButtons(container, array){
       if( i.code === 'AltRight'){
         button.addEventListener('click', changeLang);
       }
+      if (i.code === 'CapsLock'){
+        button.addEventListener('click', addUpperCase);
+      }
     })
 
   }
@@ -78,16 +85,15 @@ createButtons(thirdRow, thirdRowBtns);
 createButtons(fourthRow, fourthRowBtns);
 createButtons(fifthRow, fifthRowBtns);
 
-//add classes to elements
+//Добавялем классы к элементам
 header.classList.add('header');
 main.classList.add('main');
 textArea.classList.add('main__text');
 keyboardArea.classList.add('keyboard');
-// keyboardArea.classList.add('en');
 footer.classList.add('footer');
 keyboardRows.forEach(i => i.classList.add('keyboard__row'));
 
-//add class to specific buttons
+//Добавляем класс спец кнопок
 function additionalClass(){
   const backspaceBtn = firstRow.querySelector('.keyboard__btn:last-child');
   const capsBtn = thirdRow.querySelector('.keyboard__btn:first-child');
@@ -115,17 +121,15 @@ function additionalClass(){
 
 additionalClass();
 
-
 renderElements(page, basicElements);
 renderElements(main, mainElements);
 renderElements(keyboardArea, keyboardRows);
 
-const btnCapsLock = keyboardArea.querySelector('#capslock');
-
 //Функция для обработчика событий.
 //Появление символа в тестовом поле.
 function addBtnsListener(evt){
-  if(btnCapsLock.classList.contains('open')){
+  const btnCapsLock = keyboardArea.querySelector('#capslock');
+  if(btnCapsLock.classList.contains('keyboard__btn_type_capslock')){
     textArea.value += evt.target.dataset.value.toUpperCase();
   } else {
     textArea.value += evt.target.dataset.value;
@@ -138,10 +142,9 @@ function addBtnsListener(evt){
   }
 }
 
-
 // Функция которая работает с нажатием кнопок.
 function pushBtn(evt){
-
+  const btnCapsLock = keyboardArea.querySelector('#capslock');
   highlightButton(evt.code)
 
   if(evt.key === 'Backspace'){
@@ -174,7 +177,7 @@ function pushBtn(evt){
   } else if(evt.key === 'Shift'){
     textArea.value += '';
   } else {
-    if(btnCapsLock.classList.contains('open')){
+    if(btnCapsLock.classList.contains('keyboard__btn_type_capslock')){
       textArea.value += evt.key.toUpperCase();
     } else {
     textArea.value += evt.key;
@@ -195,7 +198,6 @@ function isSpecialKey(key) {
 
 document.addEventListener('keydown', pushBtn);
 document.addEventListener('keyup', removeHighlight);
-
 
 //Функция удаляет обработчик событий с кнопок.
 function removeBtnsListener(){
@@ -228,7 +230,6 @@ function removeElement() {
   }
 }
 
-
 //Подсветка кнопок при нажатии.
 function highlightButton(key) {
   const button = keyboardArea.querySelector(`.keyboard__btn[data-code="${key}"]`);
@@ -247,9 +248,21 @@ function removeHighlight() {
   });
 }
 
-
 function addUpperCase(){
-  btnCapsLock.classList.toggle('open');
+  const btnCapsLock = keyboardArea.querySelector('#capslock');
+  btnCapsLock.classList.toggle('keyboard__btn_type_capslock');
 }
 
-btnCapsLock.addEventListener('click', addUpperCase);
+//Текс на странице
+const title = document.createElement('h1');
+title.classList.add('header__title');
+title.textContent = 'Virtual Keyboard'
+header.append(title);
+
+const footerText = document.createElement('p');
+const footerInstruction = document.createElement('p');
+footerText.classList.add('footer__text');
+footerInstruction.classList.add('footer__text');
+footerText.textContent = 'Клавиатура создана в операционной системе Windows'
+footerInstruction.textContent = 'Для переключения языка используйте клавишу: правый alt'
+footer.append(footerText, footerInstruction);
